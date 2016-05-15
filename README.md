@@ -13,7 +13,7 @@ build beforehand.
     mkdir build
     cd build
     ```
-3. Run cmake (providing the toolchain, the SDK root as well as the target MCU):
+3. Run cmake (providing the toolchain, and if necessary the wolfSSL dir: `-DWOLFSSL_ROOT=<wolfssl-dir>`):
     ```
     cmake -DCMAKE_TOOLCHAIN_FILE=<toolchain-dir>/cmake/ubirch-arm-toolchain.cmake
     ```
