@@ -24,7 +24,7 @@ set(WOLFSSL_DEFINITIONS
         )
 
 if (TARGET mmcau)
-    set(WOLFSSL_DEFINITIONS "${WOLFSSL_DEFINITIONS} -DFREESCALE_MMCAU")
+    set(WOLFSSL_DEFINITIONS ${WOLFSSL_DEFINITIONS} -DFREESCALE_MMCAU)
     set(WOLFSSL_TARGET_MMCAU mmcau)
 endif ()
 
@@ -39,8 +39,8 @@ target_compile_definitions(wolfcrypt PUBLIC ${WOLFSSL_DEFINITIONS})
 
 set(wolfSSL_VERSION 3.9.0)
 
-# export the target ksdk20 from within the build tree, creating a config file
-export(TARGETS ${KSDK_TARGETS} FILE wolfSSLConfig.cmake)
+# export the target wolcrypt from within the build tree, creating a config file
+export(TARGETS wolfcrypt FILE wolfSSLConfig.cmake)
 
 # create a config version file
 include(CMakePackageConfigHelpers)
