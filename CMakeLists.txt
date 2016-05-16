@@ -1,4 +1,6 @@
 # CMake package build for the wolfSSL crypto library
+set(wolfSSL_VERSION 3.9.0)
+
 cmake_minimum_required(VERSION 3.0.2)
 
 # we need the Kinetis SDK 2.0 to compile wolfSSL
@@ -28,7 +30,6 @@ if (TARGET mmcau)
     set(WOLFSSL_TARGET_MMCAU mmcau)
 endif ()
 
-
 file(GLOB WOLFSSL_SRCS ${WOLFSSL_ROOT}/wolfcrypt/src/*.c)
 list(REMOVE_ITEM WOLFSSL_SRCS ${WOLFSSL_ROOT}/wolfcrypt/src/misc.c)
 
@@ -37,15 +38,22 @@ target_link_libraries(wolfcrypt ksdk20 ${WOLFSSL_TARGET_MMCAU})
 target_include_directories(wolfcrypt PUBLIC ${WOLFSSL_ROOT})
 target_compile_definitions(wolfcrypt PUBLIC ${WOLFSSL_DEFINITIONS})
 
-set(wolfSSL_VERSION 3.9.0)
+include(CMakePackageConfigHelpers)
 
 # export the target wolcrypt from within the build tree, creating a config file
-export(TARGETS wolfcrypt FILE wolfSSLConfig.cmake)
+# for the MinSizeRel build type, also write a generic config file
+if (CMAKE_BUILD_TYPE MATCHES MinSizeRel)
+    export(TARGETS ${KSDK_TARGETS} FILE wolfSSLConfig.cmake)
+    write_basic_package_version_file(
+            "${CMAKE_CURRENT_BINARY_DIR}/wolfSSLConfigVersion.cmake"
+            VERSION ${wolfSSL_VERSION}
+            COMPATIBILITY AnyNewerVersion
+    )
+endif ()
 
-# create a config version file
-include(CMakePackageConfigHelpers)
+export(TARGETS wolfcrypt FILE wolfSSL${CMAKE_BUILD_TYPE}Config.cmake)
 write_basic_package_version_file(
-        "${CMAKE_CURRENT_BINARY_DIR}/wolfSSLConfigVersion.cmake"
+        "${CMAKE_CURRENT_BINARY_DIR}/wolfSSL${CMAKE_BUILD_TYPE}ConfigVersion.cmake"
         VERSION ${wolfSSL_VERSION}
         COMPATIBILITY AnyNewerVersion
 )
