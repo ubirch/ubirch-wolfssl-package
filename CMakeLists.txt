@@ -1,14 +1,8 @@
 # CMake package build for the wolfSSL crypto library
-set(wolfSSL_VERSION 3.9.0)
-
 cmake_minimum_required(VERSION 3.0.2)
 
 # we need the Kinetis SDK 2.0 to compile wolfSSL
-find_package(KinetisSDK 2.0 REQUIRED)
-if (NOT TARGET ksdk20)
-    message(FATAL_ERROR "Could not find Kinetis SDK 2.0, please build first!")
-endif ()
-message(STATUS "Kinetis SDK: ${KinetisSDK_DIR}")
+require(PACKAGE KinetisSDK VERSION 2.0)
 
 # try to find wolfssl in the parent directory
 find_path(WOLFSSL_ROOT wolfssl NAMES wolfcrypt/src/aes.h HINTS ../wolfssl)
@@ -38,25 +32,4 @@ target_link_libraries(wolfcrypt ksdk20 ${WOLFSSL_TARGET_MMCAU})
 target_include_directories(wolfcrypt PUBLIC ${WOLFSSL_ROOT})
 target_compile_definitions(wolfcrypt PUBLIC ${WOLFSSL_DEFINITIONS})
 
-include(CMakePackageConfigHelpers)
-
-# export the target wolcrypt from within the build tree, creating a config file
-# for the MinSizeRel build type, also write a generic config file
-if (CMAKE_BUILD_TYPE MATCHES MinSizeRel)
-    export(TARGETS ${KSDK_TARGETS} FILE wolfSSLConfig.cmake)
-    write_basic_package_version_file(
-            "${CMAKE_CURRENT_BINARY_DIR}/wolfSSLConfigVersion.cmake"
-            VERSION ${wolfSSL_VERSION}
-            COMPATIBILITY AnyNewerVersion
-    )
-endif ()
-
-export(TARGETS wolfcrypt FILE wolfSSL${CMAKE_BUILD_TYPE}Config.cmake)
-write_basic_package_version_file(
-        "${CMAKE_CURRENT_BINARY_DIR}/wolfSSL${CMAKE_BUILD_TYPE}ConfigVersion.cmake"
-        VERSION ${wolfSSL_VERSION}
-        COMPATIBILITY AnyNewerVersion
-)
-
-# register this target in the cmake registry
-export(PACKAGE wolfSSL)
+provide(PACKAGE wolfSSL VERSION 3.9.0 TARGETS wolfcrypt)
