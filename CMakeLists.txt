@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 3.0.2)
 
 # we need the Kinetis SDK 2.0 to compile wolfSSL
-require(PACKAGE KinetisSDK VERSION 2.0)
+require(PACKAGE KinetisSDK MCU ${MCU} VERSION 2.0 BUILD_TYPE ${CMAKE_BUILD_TYPE})
 
 # try to find wolfssl in the parent directory
 find_path(WOLFSSL_ROOT wolfssl NAMES wolfcrypt/src/aes.h HINTS ../wolfssl)
@@ -32,4 +32,4 @@ target_link_libraries(wolfcrypt ksdk20 ${WOLFSSL_TARGET_MMCAU})
 target_include_directories(wolfcrypt PUBLIC ${WOLFSSL_ROOT})
 target_compile_definitions(wolfcrypt PUBLIC ${WOLFSSL_DEFINITIONS})
 
-provide(PACKAGE wolfSSL VERSION 3.9.0 TARGETS wolfcrypt)
+provide(PACKAGE wolfSSL MCU ${MCU} VERSION 3.9.0 TARGETS wolfcrypt)
