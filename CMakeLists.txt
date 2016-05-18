@@ -19,16 +19,18 @@ set(WOLFSSL_DEFINITIONS
         -DHAVE_ED25519
         )
 
-if (TARGET mmcau)
+# check targets we need
+set(KSDK20_KSDK KinetisSDK::${MCU}::ksdk20)
+if (TARGET KinetisSDK::${MCU}::mmcau)
     set(WOLFSSL_DEFINITIONS ${WOLFSSL_DEFINITIONS} -DFREESCALE_MMCAU)
-    set(WOLFSSL_TARGET_MMCAU mmcau)
+    set(KSDK20_MMCAU KinetisSDK::${MCU}::mmcau)
 endif ()
 
 file(GLOB WOLFSSL_SRCS ${WOLFSSL_ROOT}/wolfcrypt/src/*.c)
 list(REMOVE_ITEM WOLFSSL_SRCS ${WOLFSSL_ROOT}/wolfcrypt/src/misc.c)
 
 add_library(wolfcrypt STATIC ${WOLFSSL_SRCS})
-target_link_libraries(wolfcrypt ksdk20 ${WOLFSSL_TARGET_MMCAU})
+target_link_libraries(wolfcrypt ${KSDK20_KSDK} ${KSDK20_MMCAU})
 target_include_directories(wolfcrypt PUBLIC ${WOLFSSL_ROOT})
 target_compile_definitions(wolfcrypt PUBLIC ${WOLFSSL_DEFINITIONS})
 
