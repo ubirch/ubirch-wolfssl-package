@@ -7,7 +7,7 @@ project(ubirch-wolfssl C)
 require(PACKAGE KinetisSDK MCU ${MCU} VERSION 2.0)
 
 # try to find wolfssl in the parent directory
-find_path(WOLFSSL_ROOT wolfssl NAMES wolfcrypt/src/aes.h HINTS ../wolfssl ../ubirch-wolfssl)
+# find_path(WOLFSSL_ROOT wolfssl NAMES wolfcrypt/src/aes.h HINTS ../wolfssl ../ubirch-wolfssl)
 message(STATUS "wolfSSL directory: ${WOLFSSL_ROOT}")
 if (WOLFSSL_ROOT-NOTFOUND)
     message(FATAL_ERROR "Missing wolfssl directory, set with -DWOLFSSL_ROOT=<dir>!")
