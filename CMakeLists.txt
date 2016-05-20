@@ -7,9 +7,9 @@ project(ubirch-wolfssl C)
 require(PACKAGE KinetisSDK MCU ${MCU} VERSION 2.0)
 
 # try to find wolfssl in the parent directory
-# find_path(WOLFSSL_ROOT wolfssl NAMES wolfcrypt/src/aes.h HINTS ../wolfssl ../ubirch-wolfssl)
-message(STATUS "wolfSSL directory: ${WOLFSSL_ROOT}")
-if (WOLFSSL_ROOT-NOTFOUND)
+find_path(_WOLFSSL_ROOT wolfssl NAMES wolfcrypt/src/aes.h HINTS ${WOLFSSL_ROOT} ../wolfssl ../ubirch-wolfssl)
+message(STATUS "wolfSSL directory: ${_WOLFSSL_ROOT}")
+if (_WOLFSSL_ROOT-NOTFOUND)
     message(FATAL_ERROR "Missing wolfssl directory, set with -DWOLFSSL_ROOT=<dir>!")
 endif ()
 
@@ -28,12 +28,12 @@ if (TARGET KinetisSDK::${MCU}::mmcau)
     set(KSDK20_MMCAU KinetisSDK::${MCU}::mmcau)
 endif ()
 
-file(GLOB WOLFSSL_SRCS ${WOLFSSL_ROOT}/wolfcrypt/src/*.c)
-list(REMOVE_ITEM WOLFSSL_SRCS ${WOLFSSL_ROOT}/wolfcrypt/src/misc.c)
+file(GLOB WOLFSSL_SRCS ${_WOLFSSL_ROOT}/wolfcrypt/src/*.c)
+list(REMOVE_ITEM WOLFSSL_SRCS ${_WOLFSSL_ROOT}/wolfcrypt/src/misc.c)
 
 add_library(wolfcrypt STATIC ${WOLFSSL_SRCS})
 target_link_libraries(wolfcrypt ${KSDK20_KSDK} ${KSDK20_MMCAU})
-target_include_directories(wolfcrypt PUBLIC ${WOLFSSL_ROOT})
+target_include_directories(wolfcrypt PUBLIC ${_WOLFSSL_ROOT})
 target_compile_definitions(wolfcrypt PUBLIC ${WOLFSSL_DEFINITIONS})
 
 provide(PACKAGE wolfSSL MCU ${MCU} VERSION 3.9.0 TARGETS wolfcrypt)
