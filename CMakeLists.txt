@@ -10,22 +10,22 @@ require(PACKAGE KinetisSDK MCU ${MCU} VERSION 2.0)
 find_path(_WOLFSSL_ROOT wolfssl NAMES wolfcrypt/src/aes.h HINTS ${WOLFSSL_ROOT} ../wolfssl ../ubirch-wolfssl)
 message(STATUS "wolfSSL directory: ${_WOLFSSL_ROOT}")
 if (_WOLFSSL_ROOT-NOTFOUND)
-    message(FATAL_ERROR "Missing wolfssl directory, set with -DWOLFSSL_ROOT=<dir>!")
+  message(FATAL_ERROR "Missing wolfssl directory, set with -DWOLFSSL_ROOT=<dir>!")
 endif ()
 
 set(WOLFSSL_DEFINITIONS
-        -DWOLFSSL_KEY_GEN
-        -DFREESCALE_KSDK_BM
-        -DWOLFSSL_SHA512
-        -DHAVE_CURVE25519
-        -DHAVE_ED25519
-        )
+  -DWOLFSSL_KEY_GEN
+  -DFREESCALE_KSDK_BM
+  -DWOLFSSL_SHA512
+  -DHAVE_CURVE25519
+  -DHAVE_ED25519
+  )
 
 # check targets we need
 set(KSDK20_KSDK KinetisSDK::${MCU}::ksdk20)
 if (TARGET KinetisSDK::${MCU}::mmcau)
-    set(WOLFSSL_DEFINITIONS ${WOLFSSL_DEFINITIONS} -DFREESCALE_MMCAU)
-    set(KSDK20_MMCAU KinetisSDK::${MCU}::mmcau)
+  set(WOLFSSL_DEFINITIONS ${WOLFSSL_DEFINITIONS} -DFREESCALE_MMCAU)
+  set(KSDK20_MMCAU KinetisSDK::${MCU}::mmcau)
 endif ()
 
 file(GLOB WOLFSSL_SRCS ${_WOLFSSL_ROOT}/wolfcrypt/src/*.c)
