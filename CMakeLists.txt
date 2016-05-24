@@ -1,5 +1,7 @@
 # CMake package build for the wolfSSL crypto library
 cmake_minimum_required(VERSION 3.0.2)
+set(CMAKE_TOOLCHAIN_FILE ../ubirch-arm-toolchain/cmake/ubirch-arm-gcc-toolchain.cmake CACHE STRING "ubirch arm toolchain")
+set(MCU "MK82F25615" CACHE STRING "MCU type")
 
 project(ubirch-wolfssl C)
 
