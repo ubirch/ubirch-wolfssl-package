@@ -2,12 +2,12 @@
 
 This is a [CMake](https://cmake.org) package for the [wolfSSL](https://www.wolfssl.com/) library. It
 creates a wolfSSL library target as well that can be found by other CMake projects using `find_package()`.
-It requires the [Kinetis SDK](https://gitlab.com/ubirch/ubirch-kinetis-sdk-package) package to be
+It requires the [Kinetis SDK](https://github.com/ubirch/ubirch-kinetis-sdk-package) package to be
 build beforehand.
 
 ## Building
 
-1. Checkout the [ubirch-arm-toolchain](https://gitlab.com/ubirch/ubirch-arm-toolchain)
+1. Checkout the [ubirch-arm-toolchain](https://github.com/ubirch/ubirch-arm-toolchain)
 3. Create a build directory:
     ```
     mkdir build
