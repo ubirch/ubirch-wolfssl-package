@@ -1,4 +1,4 @@
-# ubirch [wolfSSL](https://www.wolfssl.com/) package build
+# ubirch wolfSSL package build
 
 This is a [CMake](https://cmake.org) package for the [wolfSSL](https://www.wolfssl.com/) library. It
 creates a wolfSSL library target as well that can be found by other CMake projects using `find_package()`.
@@ -8,19 +8,19 @@ build beforehand.
 ## Building
 
 1. Checkout the [ubirch-arm-toolchain](https://github.com/ubirch/ubirch-arm-toolchain)
-3. Create a build directory:
-    ```
-    mkdir build
-    cd build
-    ```
+2. Create a build directory:
+  ```
+  mkdir build
+  cd build
+  ```
 3. Run cmake (providing the toolchain, and if necessary the wolfSSL dir: `-DWOLFSSL_ROOT=<wolfssl-dir>`):
-    ```
-    cmake -DCMAKE_TOOLCHAIN_FILE=<toolchain-dir>/cmake/ubirch-arm-toolchain.cmake
-    ```
+  ```
+  cmake -DCMAKE_TOOLCHAIN_FILE=<toolchain-dir>/cmake/ubirch-arm-toolchain.cmake
+  ```
 4. Run make
-    ```
-    make
-    ```
+  ```
+  make
+  ```
 
 > If you want to build all different configuration types (`Debug`, `Release`, `MinSizeRel`, ...)
 > you need to create a build directory for every configuration and run `cmake` with an extra
@@ -33,7 +33,7 @@ build beforehand.
 
 ## License
 
->  __&#9888; Attention__ <br/>
+>  ⚠️ Attention <br/>
 > The wolfSSL library itself is __Copyright &copy; wolfSSL Inc.__, licensed under the
 > [GNU General Public License](https://en.wikipedia.org/wiki/GNU_General_Public_License).
 > Check the [wolfSSL repository](https://github.com/wolfSSL/wolfssl) for more information.
