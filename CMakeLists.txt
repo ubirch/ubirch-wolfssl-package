@@ -12,7 +12,7 @@ require(PACKAGE KinetisSDK MCU ${MCU} VERSION 2.0)
 set(WOLFSSL_GIT ../wolfssl)
 set(WOLFSSL_NXP ../ubirch-wolfssl-nxp/middleware/wolfssl_3.9.0)
 set(WOLFSSL_UBIRCH ../ubirch-wolfssl)
-find_path(_WOLFSSL_ROOT wolfssl NAMES wolfcrypt/aes.h HINTS ${WOLFSSL_ROOT} ${WOLFSSL_GIT} ${WOLFSSL_NXP} ${WOLFSSL_UBIRCH})
+find_path(_WOLFSSL_ROOT wolfssl NAMES wolfcrypt/aes.h HINTS ${WOLFSSL_ROOT} ${WOLFSSL_GIT} ${WOLFSSL_NXP} ${WOLFSSL_UBIRCH} NO_DEFAULT_PATH)
 
 if (_WOLFSSL_ROOT-NOTFOUND)
   message(FATAL_ERROR "Missing wolfssl directory, set with -DWOLFSSL_ROOT=<dir>!")
