@@ -34,20 +34,20 @@ else ()
 endif ()
 
 # check targets we need
-set(KSDK20_KSDK KinetisSDK::${MCU}::ksdk20)
+set(KSDK2_KSDK KinetisSDK::${MCU}::ksdk2)
 if (TARGET KinetisSDK::${MCU}::mmcau)
   # the NXP port already defines FREESCALE_MMCAU
   if (NOT _WOLFSSL_ROOT MATCHES ${WOLFSSL_NXP})
     set(WOLFSSL_DEFINITIONS ${WOLFSSL_DEFINITIONS} -DFREESCALE_MMCAU)
   endif ()
-  set(KSDK20_MMCAU KinetisSDK::${MCU}::mmcau)
+  set(KSDK2_MMCAU KinetisSDK::${MCU}::mmcau)
 endif ()
 
 file(GLOB WOLFSSL_SRCS ${_WOLFSSL_ROOT}/wolfcrypt/src/*.c ${_WOLFSSL_ROOT}/wolfcrypt/src/port/nxp/*.c)
 list(REMOVE_ITEM WOLFSSL_SRCS ${_WOLFSSL_ROOT}/wolfcrypt/src/misc.c)
 
 add_library(wolfcrypt STATIC ${WOLFSSL_SRCS})
-target_link_libraries(wolfcrypt ${KSDK20_KSDK} ${KSDK20_MMCAU})
+target_link_libraries(wolfcrypt ${KSDK2_KSDK} ${KSDK2_MMCAU})
 target_include_directories(wolfcrypt PUBLIC ${_WOLFSSL_ROOT}/wolfssl/wolfcrypt/port ${_WOLFSSL_ROOT})
 target_compile_definitions(wolfcrypt PUBLIC ${WOLFSSL_DEFINITIONS})
 
